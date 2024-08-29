@@ -3,23 +3,26 @@
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useMap } from 'react-leaflet'; // Direct import
 
 // Dynamic import of Map components to prevent SSR issues
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
 const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
 const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
+const UpdateMapCenter = dynamic(() => import('./UpdateMapCenter'), { ssr: false }); // Correctly importing the UpdateMapCenter component
+
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
 // Correctly load leaflet icons from the public folder
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: '/leaflet/images/marker-icon-2x.png',
-  iconUrl: '/leaflet/images/marker-icon.png',
-  shadowUrl: '/leaflet/images/marker-shadow.png',
-});
+if (typeof window !== 'undefined') {
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: '/leaflet/images/marker-icon-2x.png',
+    iconUrl: '/leaflet/images/marker-icon.png',
+    shadowUrl: '/leaflet/images/marker-shadow.png',
+  });
+}
 
 // AQI colors based on levels
 const getAqiColor = (aqi) => {
@@ -29,34 +32,6 @@ const getAqiColor = (aqi) => {
   if (aqi <= 200) return 'red';
   if (aqi <= 300) return 'purple';
   return 'maroon';
-};
-
-// Component to update map center and display AQI circle
-const UpdateMapCenter = ({ lat, log, aqi }) => {
-  const map = useMap(); // Use the directly imported useMap hook
-
-  useEffect(() => {
-    if (lat !== null && log !== null) {
-      map.setView([lat, log], 13);
-    }
-  }, [lat, log, map]);
-
-  useEffect(() => {
-    if (lat !== null && log !== null && aqi !== null) {
-      const circle = L.circle([lat, log], {
-        color: getAqiColor(aqi),
-        fillColor: getAqiColor(aqi),
-        fillOpacity: 0.5,
-        radius: 1000,
-      }).addTo(map);
-
-      return () => {
-        map.removeLayer(circle);
-      };
-    }
-  }, [lat, log, aqi, map]);
-
-  return null;
 };
 
 // Main MapComponent
