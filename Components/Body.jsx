@@ -1,11 +1,18 @@
-import React from 'react'
+"use client" 
 
-const body = () => {
+import React, { useState } from 'react'
+import Navbar from './NavBar/Navbar'
+
+const Body = () => {
+
+  const [log, setLog] = useState(null);
+  const [lat, setLat] = useState(null);
+
   return (
-    <div>
-      hello from body
+    <div className='body'>
+      <Navbar setLat={setLat} setLog={setLog} />
     </div>
   )
 }
 
-export default body
+export default Body
