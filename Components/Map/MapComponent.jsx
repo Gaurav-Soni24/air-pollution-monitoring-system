@@ -1,17 +1,24 @@
- "use client"
+"use client";
 
+import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import axios from 'axios';
+import { useMap } from 'react-leaflet'; // Direct import
+
+// Dynamic import of Map components to prevent SSR issues
+const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
+const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import axios from 'axios';
 
-// Fixing the default icon issue in Leaflet
+// Correctly load leaflet icons from the public folder
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: '/leaflet/images/marker-icon-2x.png',
+  iconUrl: '/leaflet/images/marker-icon.png',
+  shadowUrl: '/leaflet/images/marker-shadow.png',
 });
 
 // AQI colors based on levels
@@ -26,12 +33,7 @@ const getAqiColor = (aqi) => {
 
 // Component to update map center and display AQI circle
 const UpdateMapCenter = ({ lat, log, aqi }) => {
-  const map = useMapEvents({
-    click(e) {
-      // Update the latitude and longitude based on where the user clicks
-      map.setView([e.latlng.lat, e.latlng.lng], map.getZoom());
-    },
-  });
+  const map = useMap(); // Use the directly imported useMap hook
 
   useEffect(() => {
     if (lat !== null && log !== null) {
@@ -58,7 +60,7 @@ const UpdateMapCenter = ({ lat, log, aqi }) => {
 };
 
 // Main MapComponent
-const MapComponent = ({ lat, log, setLat, setLog }) => {
+const MapComponent = ({ lat = null, log = null, setLat, setLog }) => {
   const [aqi, setAqi] = useState(null);
 
   useEffect(() => {
@@ -77,20 +79,14 @@ const MapComponent = ({ lat, log, setLat, setLog }) => {
     fetchAqiData();
   }, [lat, log]);
 
-  const handleMapClick = (e) => {
-    setLat(e.latlng.lat);
-    setLog(e.latlng.lng);
-  };
-
-  // Check if lat and log are null
-  if (lat === null || log === null) {
+  if (lat == null || log == null) {
     return <div>No location selected</div>;
   }
 
   const position = [lat, log];
 
   return (
-    <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }} onClick={handleMapClick}>
+    <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
