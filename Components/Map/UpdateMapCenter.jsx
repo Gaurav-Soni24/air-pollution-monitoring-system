@@ -6,13 +6,15 @@ const UpdateMapCenter = ({ lat, log, aqi }) => {
   const map = useMap();
 
   useEffect(() => {
-    if (lat !== null && log !== null) {
+    // Ensure this code runs only on the client side
+    if (typeof window !== 'undefined' && lat !== null && log !== null) {
       map.setView([lat, log], 13);
     }
   }, [lat, log, map]);
 
   useEffect(() => {
-    if (lat !== null && log !== null && aqi !== null) {
+    // Ensure this code runs only on the client side
+    if (typeof window !== 'undefined' && lat !== null && log !== null && aqi !== null) {
       const circle = L.circle([lat, log], {
         color: getAqiColor(aqi),
         fillColor: getAqiColor(aqi),
