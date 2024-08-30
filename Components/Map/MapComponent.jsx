@@ -13,32 +13,23 @@ const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), 
 const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { ssr: false });
 const UpdateMapCenter = dynamic(() => import('./UpdateMapCenter'), { ssr: false });
 
-// Ensure Leaflet icons are loaded correctly only in the browser environment
-if (typeof window !== 'undefined') {
-  useEffect(() => {
-    delete L.Icon.Default.prototype._getIconUrl;
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: '/leaflet/images/marker-icon-2x.png',
-      iconUrl: '/leaflet/images/marker-icon.png',
-      shadowUrl: '/leaflet/images/marker-shadow.png',
-    });
-  }, []);
-}
-
-// Function to get the AQI color
-const getAqiColor = (aqi) => {
-  if (aqi <= 50) return 'green';
-  if (aqi <= 100) return 'yellow';
-  if (aqi <= 150) return 'orange';
-  if (aqi <= 200) return 'red';
-  if (aqi <= 300) return 'purple';
-  return 'maroon';
-};
-
 // Main MapComponent
 const MapComponent = ({ lat = null, log = null, setLat, setLog }) => {
   const [aqi, setAqi] = useState(null);
 
+  // Ensure Leaflet icons are loaded correctly only in the browser environment
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: '/leaflet/images/marker-icon-2x.png',
+        iconUrl: '/leaflet/images/marker-icon.png',
+        shadowUrl: '/leaflet/images/marker-shadow.png',
+      });
+    }
+  }, []);
+
+  // Fetch AQI data based on latitude and longitude
   useEffect(() => {
     const fetchAqiData = async () => {
       if (lat !== null && log !== null) {
