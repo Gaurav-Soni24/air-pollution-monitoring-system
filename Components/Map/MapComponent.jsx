@@ -13,15 +13,16 @@ const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), 
 const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { ssr: false });
 const UpdateMapCenter = dynamic(() => import('./UpdateMapCenter'), { ssr: false });
 
-// Correctly configure Leaflet icons when in the browser environment
+// Ensure Leaflet icons are loaded correctly only in the browser environment
 if (typeof window !== 'undefined') {
-  // Ensure Leaflet's default icon images are loaded correctly
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: '/leaflet/images/marker-icon-2x.png',
-    iconUrl: '/leaflet/images/marker-icon.png',
-    shadowUrl: '/leaflet/images/marker-shadow.png',
-  });
+  useEffect(() => {
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: '/leaflet/images/marker-icon-2x.png',
+      iconUrl: '/leaflet/images/marker-icon.png',
+      shadowUrl: '/leaflet/images/marker-shadow.png',
+    });
+  }, []);
 }
 
 // Function to get the AQI color
