@@ -1,3 +1,5 @@
+"use client"; // Ensures this file is treated as a client component
+
 import React, { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -5,15 +7,14 @@ import L from 'leaflet';
 const UpdateMapCenter = ({ lat, log, aqi }) => {
   const map = useMap();
 
+  // Move code that depends on browser-specific objects to useEffect
   useEffect(() => {
-    // Ensure this code runs only on the client side
     if (typeof window !== 'undefined' && lat !== null && log !== null) {
       map.setView([lat, log], 13);
     }
   }, [lat, log, map]);
 
   useEffect(() => {
-    // Ensure this code runs only on the client side
     if (typeof window !== 'undefined' && lat !== null && log !== null && aqi !== null) {
       const circle = L.circle([lat, log], {
         color: getAqiColor(aqi),
@@ -31,6 +32,7 @@ const UpdateMapCenter = ({ lat, log, aqi }) => {
   return null;
 };
 
+// Helper function to get the color based on AQI level
 const getAqiColor = (aqi) => {
   if (aqi <= 50) return 'green';
   if (aqi <= 100) return 'yellow';
