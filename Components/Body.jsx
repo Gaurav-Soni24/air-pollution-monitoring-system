@@ -3,9 +3,9 @@
 import React, { useState } from 'react'
 import Navbar from './NavBar/Navbar'
 import AqiCard from './AQI/AqiCard';
-import MapCard from './Map/MapCard';
 import './Body.css'
-
+import HistoricalAqiGraph from './HistoryCard/HistoricalAqiGraph'
+import MapCard from './Map/MapCard';
 const Body = () => {
 
   const [log, setLog] = useState(null);
@@ -17,6 +17,7 @@ const Body = () => {
       <div className="dashboard">
         <AqiCard lat={lat} log={log} />
         <MapCard lat={lat} log={log} setLog={setLog} setLat={setLat}/>
+        <HistoricalAqiGraph lat={lat} log={log} />
       </div>
     </div>
   )
