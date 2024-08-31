@@ -1,8 +1,9 @@
 .mapCard {
-    height: 370px;
-    min-width: 332px;
-    max-width: 100%; /* Ensures the card does not exceed the container width */
-    width: calc(100% - 800px);
+    padding: 20px;
+    width: 100%;
+    max-width: 670px;
+    margin: 25px;
+    height: 335px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,9 +12,8 @@
     border-radius: 8px;
     background-color: #fff;
     transition: ease 0.3s;
-    margin: 15px;
-    box-sizing: border-box; /* Ensures padding and border are included in width */
-    overflow: hidden; /* Prevents content overflow */
+    box-sizing: border-box;
+    overflow: hidden; 
 }
 
 .mapCard:hover {
@@ -39,10 +39,3 @@
     width: 100%;
 }
 
-@media (max-width: 1100px) {
-    .mapCard {
-        width: 90%; /* Sets width to 90% for smaller screens */
-        min-width: 300px; /* Ensures minimum width for better responsiveness */
-        max-width: none; /* Allows flexibility in width */
-    }
-}

@@ -1,5 +1,5 @@
 .historical-aqi-graph {
-    background-color: white;
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     padding: 20px;
@@ -8,8 +8,8 @@
     margin: 25px;
     height: 390px;
     transition: transform 0.3s ease;
-    box-sizing: border-box; /* Ensures padding is included in width calculation */
-    overflow: hidden; /* Prevents content overflow */
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .historical-aqi-graph:hover {
@@ -60,7 +60,6 @@
 @media (max-width: 480px) {
     .historical-aqi-graph {
         padding: 10px;
-        height: auto; /* Allows height to adjust based on content */
     }
 
     .historical-aqi-graph h2 {
