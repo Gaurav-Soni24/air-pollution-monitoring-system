@@ -5,7 +5,6 @@
     margin: 25px;
     height: 335px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -21,17 +20,13 @@
     transition: ease 0.3s;
 }
 
-.mapHeading {
-    height: 12%;
-    font-size: 13px;
-    text-align: left;
-    width: 90%;
-}
-
 .mapArea {
-    height: 96%;
-    width: 96%;
-    margin: 8px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
 }
 
 .mapArea MapComponent {

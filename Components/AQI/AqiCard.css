@@ -25,6 +25,8 @@
     align-items: center;
     justify-content: space-between;
     font-size: 1.5rem;
+    margin-left: 12px;
+    font-weight: bold;
 }
 
 .label div {
@@ -36,6 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 12px;
     font-size: 1.2rem;
 }
 
