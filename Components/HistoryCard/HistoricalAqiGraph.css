@@ -5,7 +5,7 @@
     padding: 20px;
     width: 90%;
     max-width: 670px;
-    margin: 25px auto; /* Center the card */
+    margin: 25px; /* Center the card */
     height: auto; /* Removed fixed height */
     transition: transform 0.3s ease;
     box-sizing: border-box;

@@ -6,6 +6,7 @@ import AqiCard from './AQI/AqiCard';
 import './Body.css'
 import HistoricalAqiGraph from './HistoryCard/HistoricalAqiGraph'
 import MapCard from './Map/MapCard';
+import HealthRecommendation from './HealthRecommendation/HealthRecommendation';
 const Body = () => {
 
   const [log, setLog] = useState(null);
@@ -18,6 +19,7 @@ const Body = () => {
         <AqiCard lat={lat} log={log} />
         <MapCard lat={lat} log={log} setLog={setLog} setLat={setLat}/>
         <HistoricalAqiGraph lat={lat} log={log} />
+        <HealthRecommendation lat={lat} log={log}/>
       </div>
     </div>
   )

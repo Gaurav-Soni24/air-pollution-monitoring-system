@@ -1,0 +1,61 @@
+.health-recommendation {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    padding: 20px;
+    width: 90%;
+    max-width: 670px;
+    margin: 25px;
+    height: auto; 
+    transition: transform 0.3s ease;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .health-recommendation:hover{
+    transform: scale(1.01);
+  }
+  
+  .health-recommendation h1{
+    color: #333;
+    font-size: 29px;
+    font-weight: 700;
+  }
+
+  .health-recommendation h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .health-recommendation p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .health-recommendation p strong {
+    font-weight: bold;
+  }
+  
+  .aqi-value {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .recommendation-item {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+  }
+  
+  .recommendation-item img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .recommendation-item p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
