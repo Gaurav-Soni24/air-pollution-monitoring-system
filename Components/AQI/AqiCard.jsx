@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import AqiMeter from './AqiMeter';
 import './AqiCard.css';
 import Meter from './Meter';
+import Alert from '../Alert/Alert';
 
 const AqiCard = ({ lat, log }) => {
     const [AQI, setAQI] = useState(0);
@@ -37,6 +38,7 @@ const AqiCard = ({ lat, log }) => {
 
     return (
         <div className='card'>
+            <Alert aqiLevel={AQI} />
             <div className="label">
                 <h1>Air Quality</h1>
                 <div>!</div>

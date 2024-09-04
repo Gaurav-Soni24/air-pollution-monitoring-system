@@ -7,6 +7,8 @@ import './Body.css'
 import HistoricalAqiGraph from './HistoryCard/HistoricalAqiGraph'
 import MapCard from './Map/MapCard';
 import HealthRecommendation from './HealthRecommendation/HealthRecommendation';
+import Location from './Location/Location';
+import Alert from './Alert/Alert';
 const Body = () => {
 
   const [log, setLog] = useState(null);
@@ -14,7 +16,9 @@ const Body = () => {
 
   return (
     <div className='body'>
-      <Navbar setLat={setLat} setLog={setLog} />
+      <Navbar/>
+      <Location setLog={setLog} setLat={setLat}/>
+      <Alert lat={lat} log={log} />
       <div className="dashboard">
         <AqiCard lat={lat} log={log} />
         <MapCard lat={lat} log={log} setLog={setLog} setLat={setLat}/>

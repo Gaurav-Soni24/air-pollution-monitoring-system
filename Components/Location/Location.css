@@ -1,0 +1,156 @@
+/* Container for the search component */
+.location {
+    padding: 12px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 40vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 10px auto;
+}
+
+/* Style for the currently selected location */
+.place {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    margin-right: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 15px;
+}
+
+/* Wrapper for search input and icon */
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    width: 8%;
+    position: relative;
+    transition: width 0.3s ease;
+}
+
+/* Adjust the width of search-wrapper when search is active */
+.search-wrapper.active {
+    width: 100%;
+}
+
+/* Flex container for search bar */
+.searchBar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+/* Input field styling */
+.inputBar {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid #dcdcdc;
+    background-color: #f9f9f9;
+    width: 100%;
+    display: block;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Input field focus styling */
+.inputBar:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #ffffff;
+}
+
+/* Clear icon styling */
+.clear-icon {
+    position: absolute;
+    right: 50px;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.clear-icon:hover {
+    color: #007bff;
+}
+
+/* Search icon styling */
+.search-icon {
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 8px;
+}
+
+.search-icon:hover {
+    color: #0056b3;
+}
+
+/* Wrapper for search results */
+.resultWrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    border-radius: 8px;
+    margin-top: 4px;
+}
+
+/* Scrollbar styling for search results */
+.resultWrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.resultWrapper::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 4px;
+}
+
+.resultWrapper::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+/* Individual result item styling */
+.result {
+    padding: 12px;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Hover and active states for result items */
+.result:hover,
+.result.active {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .location {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .place {
+        font-size: 14px;
+    }
+
+    .inputBar {
+        font-size: 16px;
+    }
+}

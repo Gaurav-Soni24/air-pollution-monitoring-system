@@ -1,0 +1,125 @@
+/* Container for the alert */
+.alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    border-radius: 8px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    z-index: 1001; /* Ensure it appears above other elements */
+    animation: fadeIn 0.5s ease-in-out;
+    flex-direction: column;
+}
+
+.alert-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.alert-head{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Good AQI Alert */
+.alert-container.good {
+    background-color: #ccffcc;
+    border: 1px solid #00e600;
+}
+
+.alert-container.good .alert-icon {
+    color: #00e600;
+}
+
+/* Moderate AQI Alert */
+.alert-container.moderate {
+    background-color: #ffffcc;
+    border: 1px solid #ffcc00;
+}
+
+.alert-container.moderate .alert-icon {
+    color: #ffcc00;
+}
+
+/* Unhealthy for Sensitive Groups Alert */
+.alert-container.unhealthy-sensitive {
+    background-color: #ffebcc;
+    border: 1px solid #ff9900;
+}
+
+.alert-container.unhealthy-sensitive .alert-icon {
+    color: #ff9900;
+}
+
+/* Unhealthy AQI Alert */
+.alert-container.unhealthy {
+    background-color: #ffcccc;
+    border: 1px solid #ff0000;
+}
+
+.alert-container.unhealthy .alert-icon {
+    color: #ff0000;
+}
+
+/* Very Unhealthy AQI Alert */
+.alert-container.very-unhealthy {
+    background-color: #ffccff;
+    border: 1px solid #cc00cc;
+}
+
+.alert-container.very-unhealthy .alert-icon {
+    color: #cc00cc;
+}
+
+/* Hazardous AQI Alert */
+.alert-container.hazardous {
+    background-color: #ffcccc;
+    border: 1px solid #990000;
+}
+
+.alert-container.hazardous .alert-icon {
+    color: #990000;
+}
+
+/* Styling for the alert icon */
+.alert-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+/* Styling for the alert text */
+.alert-text {
+    font-size: 14px;
+    color: #333;
+    flex-grow: 1;
+}
+
+/* Close button for the alert */
+.alert-close-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.alert-close-button:hover {
+    color: #c9302c;
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

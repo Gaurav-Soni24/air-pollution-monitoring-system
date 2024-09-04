@@ -25,14 +25,15 @@ const getAqiColor = (aqi) => {
 
 const MapComponent = ({ lat = null, log = null, setLat, setLog }) => {
   const mapContainerRef = useRef(null);
-  const [map, setMap] = useState(null);
+  const mapRef = useRef(null); // Store the map instance
   const [aqi, setAqi] = useState(null);
+  const markerLayerRef = useRef(null); // Reference for the marker layer
 
   useEffect(() => {
     if (lat === null || log === null) return;
 
-    // Initialize the OpenLayers map
-    const initializeMap = () => {
+    // Initialize the OpenLayers map only once
+    if (!mapRef.current) {
       const initialMap = new Map({
         target: mapContainerRef.current,
         layers: [
@@ -46,43 +47,49 @@ const MapComponent = ({ lat = null, log = null, setLat, setLog }) => {
         }),
       });
 
-      setMap(initialMap);
-    };
-
-    if (!map) {
-      initializeMap();
+      mapRef.current = initialMap;
     } else {
-      map.setView(
-        new View({
-          center: fromLonLat([log, lat]),
-          zoom: 13,
-        })
-      );
-
-      // Clear existing markers and add a new marker with AQI color
-      const vectorSource = new VectorSource();
-      const marker = new Feature({
-        geometry: new Point(fromLonLat([log, lat])),
-      });
-      marker.setStyle(
-        new Style({
-          image: new CircleStyle({
-            radius: 8,
-            fill: new Fill({ color: getAqiColor(aqi) }),
-            stroke: new Stroke({ color: 'white', width: 2 }),
-          }),
-        })
-      );
-      vectorSource.addFeature(marker);
-
-      const markerLayer = new VectorLayer({
-        source: vectorSource,
-      });
-
-      map.addLayer(markerLayer);
+      // Update the map view whenever lat or log change
+      mapRef.current.getView().setCenter(fromLonLat([log, lat]));
+      mapRef.current.getView().setZoom(13);
     }
 
-    return () => map?.setTarget(undefined); // Clean up map on component unmount
+    // Clear existing markers and add a new marker with AQI color
+    if (markerLayerRef.current) {
+      mapRef.current.removeLayer(markerLayerRef.current);
+    }
+
+    const vectorSource = new VectorSource();
+    const marker = new Feature({
+      geometry: new Point(fromLonLat([log, lat])),
+    });
+
+    marker.setStyle(
+      new Style({
+        image: new CircleStyle({
+          radius: 8,
+          fill: new Fill({ color: getAqiColor(aqi) }),
+          stroke: new Stroke({ color: 'white', width: 2 }),
+        }),
+      })
+    );
+
+    vectorSource.addFeature(marker);
+
+    const markerLayer = new VectorLayer({
+      source: vectorSource,
+    });
+
+    mapRef.current.addLayer(markerLayer);
+    markerLayerRef.current = markerLayer; // Save reference to the marker layer
+
+    // Clean up map on component unmount
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.setTarget(null);
+        mapRef.current = null;
+      }
+    };
   }, [lat, log, aqi]);
 
   // Fetch AQI data based on latitude and longitude
